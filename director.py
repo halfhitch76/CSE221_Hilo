@@ -1,4 +1,5 @@
 
+from pickle import TRUE
 from card import Card
 
 class Director:
@@ -18,43 +19,50 @@ class Director:
 
 
     def get_inputs(self):
-        roll_dice = input("Play again? y/n ")
-        self.is_playing = (roll_dice == "y")
-
-        user_input = ('Higher or Lower? (h/l')
-
-
-        pass 
+        play_again = input("Play again? y/n ")
+        if play_again == "y":
+            self.is_playing = True       
+        else:
+            self.is_playing = False
 
 
-    def do_updates(self,user_input):
-        card_number = Card.card()
-        new_card = Card.card()
-        
-        if card_number > new_card:
-            if user_input == 'l':
-                self.score = self.score + 100
-            else:
-                self.score = self.score - 75
-
-        elif card_number < new_card:
-            if user_input == 'l':
-                self.score = self.score + 100
-            else:
-                self.score = self.score - 75
+    def do_updates(self):
 
         if not self.is_playing:
             return 
+
+        card_number = Card.card(Card)
+        print(f'The card is {card_number}:')
+        user_input = input('Higher or Lower? (h/l) ')
+        new_card = Card.card(Card)
+        print(f'Next card was {new_card}')
+
+        #compares the input with the card
+        if card_number > new_card:
+            if user_input == 'l':
+                self.score = self.score + 100
+            elif user_input == 'h':
+                self.score = self.score - 75
+
+        elif card_number < new_card:
+            if user_input == 'h':
+                self.score = self.score + 100
+            elif user_input == 'l':
+                self.score = self.score - 75
 
 
 
     def do_outputs(self):
+
         if not self.is_playing:
-            return 
+            return
 
-        #display score 
+        score = self.score
+        print(f'Your score is {score}:')
 
-        self.is_playing == (self.score > 0)
+        if score < 0:
+            self.is_playing = False
 
-
-    
+        else:
+            self.is_playing = True
+        
